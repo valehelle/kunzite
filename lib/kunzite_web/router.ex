@@ -17,14 +17,21 @@ defmodule KunziteWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :graphql do
+    plug :fetch_session
+    plug :fetch_current_user
+    plug KunziteWeb.Context
+  end
+
   scope "/", KunziteWeb do
     pipe_through :browser
 
     live "/", PageLive, :index
   end
 
+
   scope "/graphql" do
-    pipe_through :api
+    pipe_through [:api, :graphql]
 
     forward "/graphiql", Absinthe.Plug.GraphiQL,
       schema: KunziteWeb.Schema,

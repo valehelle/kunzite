@@ -27,7 +27,6 @@ defmodule KunziteWeb.UserAuth do
   def log_in_user(conn, user, params \\ %{}) do
     token = Accounts.generate_user_session_token(user)
     user_return_to = get_session(conn, :user_return_to)
-
     conn
     |> renew_session()
     |> put_session(:user_token, token)
@@ -138,6 +137,7 @@ defmodule KunziteWeb.UserAuth do
       |> halt()
     end
   end
+
 
   defp maybe_store_return_to(%{method: "GET"} = conn) do
     put_session(conn, :user_return_to, current_path(conn))
