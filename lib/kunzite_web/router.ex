@@ -23,6 +23,15 @@ defmodule KunziteWeb.Router do
     live "/", PageLive, :index
   end
 
+  scope "/graphql" do
+    pipe_through :api
+
+    forward "/graphiql", Absinthe.Plug.GraphiQL,
+      schema: KunziteWeb.Schema,
+      interface: :simple,
+      context: %{pubsub: KunziteWeb.Endpoint}
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", KunziteWeb do
   #   pipe_through :api
