@@ -74,3 +74,8 @@ config :phoenix, :stacktrace_depth, 20
 
 # Initialize plugs at runtime for faster development compilation
 config :phoenix, :plug_init_mode, :runtime
+
+
+# Configure hashids
+config :kunzite, Kunzite.Hashids,
+  salt: "this is a salt"

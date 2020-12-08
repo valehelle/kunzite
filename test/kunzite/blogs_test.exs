@@ -21,6 +21,17 @@ defmodule Kunzite.BlogsTest do
       {post, user}
     end
 
+    test "list_post/1 returns list of post with given id" do
+      {post, user}  = post_fixture()
+      assert Blogs.list_post(user.id) == [post]
+    end
+
+    test "list_post/1 returns empty list with given id" do
+      {post, user}  = post_fixture()
+      user = user_fixture()
+      assert Blogs.list_post(user.id) == []
+    end
+
     test "get_post!/1 returns the post with given id" do
       {post, user}  = post_fixture()
       assert Blogs.get_post!(post.id) == post

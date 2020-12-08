@@ -7,6 +7,7 @@ defmodule Kunzite.Blogs.Post do
   schema "posts" do
     field :content, :string
     field :title, :string
+    field :slug, :string
     belongs_to :author, User
     
     timestamps()
@@ -15,9 +16,9 @@ defmodule Kunzite.Blogs.Post do
   @doc false
   def create_changeset(post, attrs, user) do
     post
-    |> cast(attrs, [:title, :content])
+    |> cast(attrs, [:title, :content, :slug])
     |> put_assoc(:author, user)
-    |> validate_required([:title, :content, :author])
+    |> validate_required([:title, :content, :author, :slug])
   end
 
   def update_changeset(post, attrs) do

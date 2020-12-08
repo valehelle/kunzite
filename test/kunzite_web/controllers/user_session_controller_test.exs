@@ -8,17 +8,10 @@ defmodule KunziteWeb.UserSessionControllerTest do
   end
 
   describe "GET /users/log_in" do
-    test "renders log in page", %{conn: conn} do
-      conn = get(conn, Routes.user_session_path(conn, :new))
-      response = html_response(conn, 200)
-      assert response =~ "<h1>Log in</h1>"
-      assert response =~ "Log in</a>"
-      assert response =~ "Register</a>"
-    end
 
     test "redirects if already logged in", %{conn: conn, user: user} do
       conn = conn |> log_in_user(user) |> get(Routes.user_session_path(conn, :new))
-      assert redirected_to(conn) == "/"
+      assert redirected_to(conn) == "/post"
     end
   end
 

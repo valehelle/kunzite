@@ -1,0 +1,27 @@
+<section class="phx-hero">
+  <h1>Ready made CMS for your blog</h1>
+  <h2>Query using GraphQL.</h2>
+  <p>React, Angular, Svelte, Vue, Ember, Elm</p>
+  <p>Choose your own front-end framework.</p>
+
+</section>
+
+<section class="row">
+  <article class="column">
+    <h2>Resources</h2>
+    <ul>
+      <li>
+        <a href="https://github.com/valehelle/kunzite">Github</a>
+      </li>
+      <li>
+        <a href="https://dev.to/tehaisperlis">Dev.to</a>
+      </li>
+      <li>
+        <a href="https://twitter.com/TehAisPerlis">Twitter</a>
+      </li>
+      <li>
+        <a href="https://twitter.com/TehAisPerlis">Linkedin</a>
+      </li>
+    </ul>
+  </article>
+</section>

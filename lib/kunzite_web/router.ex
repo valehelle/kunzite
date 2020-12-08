@@ -26,11 +26,11 @@ defmodule KunziteWeb.Router do
   scope "/", KunziteWeb do
     pipe_through :browser
 
-    live "/", PageLive, :index
+    get "/", PageController, :index
   end
 
 
-  scope "/graphql" do
+  scope "/" do
     pipe_through [:api, :graphql]
 
     forward "/graphiql", Absinthe.Plug.GraphiQL,
@@ -81,6 +81,10 @@ defmodule KunziteWeb.Router do
     get "/users/settings", UserSettingsController, :edit
     put "/users/settings", UserSettingsController, :update
     get "/users/settings/confirm_email/:token", UserSettingsController, :confirm_email
+    get "/posts", PostController, :index
+    get "/posts/new", PostController, :new
+    post "/posts/new", PostController, :create
+    get "/posts/:slug", PostController, :show
   end
 
   scope "/", KunziteWeb do

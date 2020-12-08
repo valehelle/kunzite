@@ -9,6 +9,7 @@ defmodule Kunzite.Accounts.User do
     field :password, :string, virtual: true
     field :hashed_password, :string
     field :confirmed_at, :naive_datetime
+    field :hashid, :string, virtual: true
     has_many :post, Post, foreign_key: :author_id
     timestamps()
   end

@@ -11,6 +11,29 @@ defmodule Kunzite.Blogs do
 
 
   @doc """
+  Gets a list of post by user.
+
+  Empty list if the User has no post.
+
+  ## Examples
+
+      iex> list_post(123)
+      [%Post{}]
+
+      iex> get_post(123)
+      []
+
+  """
+  def list_post(id) do
+    query = from p in Post,
+            where: p.author_id == ^id,
+            preload: [:author]
+    Repo.all(query)
+  end
+
+
+
+  @doc """
   Gets a single post.
 
   Raises `Ecto.NoResultsError` if the Post does not exist.
@@ -27,6 +50,28 @@ defmodule Kunzite.Blogs do
   def get_post!(id), do: Repo.get!(Post, id) |> Repo.preload([:author])
 
   @doc """
+  Gets a single post.
+
+  Raises nil if the Post does not exist.
+
+  ## Examples
+
+      iex> get_post("helo-this", 123)
+      %Post{}
+
+      iex> get_post("does-not-exists", 1234)
+      nil
+
+  """
+
+  def get_post_from_slug(slug, id) do 
+    query = from p in Post,
+            where: p.slug == ^slug,
+            where: p.author_id == ^id
+    Repo.one(query) |> Repo.preload([:author])
+  end
+
+  @doc """
   Creates a post.
 
   ## Examples
@@ -39,6 +84,13 @@ defmodule Kunzite.Blogs do
 
   """
   def create_post(attrs \\ %{}, user) do
+    
+    %{"title" => title} = attrs
+    time = DateTime.utc_now() |> DateTime.to_unix(:millisecond)
+    slug = Slug.slugify("#{title} #{time}")
+    
+    attrs = Map.put(attrs, "slug", slug)
+
     %Post{}
     |> Post.create_changeset(attrs, user)
     |> Repo.insert()

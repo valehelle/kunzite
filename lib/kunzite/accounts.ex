@@ -57,8 +57,31 @@ defmodule Kunzite.Accounts do
       ** (Ecto.NoResultsError)
 
   """
-  def get_user!(id), do: Repo.get!(User, id) |> Repo.preload([:post])
+  def get_user!(id) do
+    user = Repo.get!(User, id) |> Repo.preload([:post])
+    user = %{user | hashid: encode_id(user.id)}
+  end
 
+  def get_user_by_hashid(id) do
+      id = decode_id(id)
+      get_user!(id)
+  end
+
+   def encode_id(id) do
+    s = Hashids.new([
+    salt: Application.get_env(:kunzite, Kunzite.Hashids)[:salt],  # using a custom salt helps producing unique cipher text
+    min_len: 4,   # minimum length of the cipher text (1 by default)
+   ])
+    Hashids.encode(s, id)
+  end
+
+  def decode_id(hash_id) do
+    s = Hashids.new([
+    salt: Application.get_env(:kunzite, Kunzite.Hashids)[:salt],  # using a custom salt helps producing unique cipher text
+    min_len: 4,   # minimum length of the cipher text (1 by default)
+   ])
+    Hashids.decode!(s, hash_id) |> List.first()
+  end
   ## User registration
 
   @doc """
