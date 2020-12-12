@@ -20,7 +20,6 @@ defmodule KunziteWeb.Schema do
   query do
     @desc "Get post"
     field :post, non_null(:post) do
-     arg :id, non_null(:string)
      arg :slug, non_null(:string)
      resolve(&BlogsResolver.get_post/3)
     end

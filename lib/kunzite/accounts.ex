@@ -58,8 +58,7 @@ defmodule Kunzite.Accounts do
 
   """
   def get_user!(id) do
-    user = Repo.get!(User, id) |> Repo.preload([:post])
-    user = %{user | hashid: encode_id(user.id)}
+    Repo.get!(User, id) |> Repo.preload([:post]) |> add_hash_id
   end
 
   def get_user_by_hashid(id) do
@@ -250,7 +249,11 @@ defmodule Kunzite.Accounts do
   """
   def get_user_by_session_token(token) do
     {:ok, query} = UserToken.verify_session_token_query(token)
-    Repo.one(query)
+    Repo.one(query) |> add_hash_id
+  end
+
+  defp add_hash_id(user) do
+    %{user | hash_id: encode_id(user.id)}
   end
 
   @doc """

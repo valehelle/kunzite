@@ -64,10 +64,9 @@ defmodule Kunzite.Blogs do
 
   """
 
-  def get_post_from_slug(slug, id) do 
+  def get_post_from_slug(slug) do 
     query = from p in Post,
-            where: p.slug == ^slug,
-            where: p.author_id == ^id
+            where: p.slug == ^slug
     Repo.one(query) |> Repo.preload([:author])
   end
 
@@ -84,13 +83,6 @@ defmodule Kunzite.Blogs do
 
   """
   def create_post(attrs \\ %{}, user) do
-    
-    %{"title" => title} = attrs
-    time = DateTime.utc_now() |> DateTime.to_unix(:millisecond)
-    slug = Slug.slugify("#{title} #{time}")
-    
-    attrs = Map.put(attrs, "slug", slug)
-
     %Post{}
     |> Post.create_changeset(attrs, user)
     |> Repo.insert()

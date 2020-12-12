@@ -4,6 +4,7 @@ defmodule KunziteWeb.PostController do
   alias Kunzite.Blogs.Post
   def index(conn, _params) do
     current_user = conn.assigns.current_user
+    IO.inspect current_user
     posts = Blogs.list_post(current_user.id)
     render(conn, "index.html", posts: posts)
   end
