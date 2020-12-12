@@ -5,6 +5,11 @@ defmodule Kunzite.AccountsTest do
   import Kunzite.AccountsFixtures
   alias Kunzite.Accounts.{User, UserToken}
 
+  setup do
+    Application.put_env(:kunzite, Kunzite.Hashids, salt: "test hash")
+  end
+
+
   describe "get_user_by_email/1" do
     test "does not return the user if the email does not exist" do
       refute Accounts.get_user_by_email("unknown@example.com")

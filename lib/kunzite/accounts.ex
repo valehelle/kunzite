@@ -7,6 +7,9 @@ defmodule Kunzite.Accounts do
   alias Kunzite.Repo
   alias Kunzite.Accounts.{User, UserToken, UserNotifier}
 
+
+
+
   ## Database getters
 
   @doc """
@@ -38,8 +41,8 @@ defmodule Kunzite.Accounts do
 
   """
   def get_user_by_email_and_password(email, password)
-      when is_binary(email) and is_binary(password) do
-    user = Repo.get_by(User, email: email)
+    when is_binary(email) and is_binary(password) do
+      user = Repo.get_by(User, email: email)
     if User.valid_password?(user, password), do: user
   end
 
@@ -58,6 +61,7 @@ defmodule Kunzite.Accounts do
 
   """
   def get_user!(id) do
+
     Repo.get!(User, id) |> Repo.preload([:post]) |> add_hash_id
   end
 
@@ -252,9 +256,13 @@ defmodule Kunzite.Accounts do
     Repo.one(query) |> add_hash_id
   end
 
+  defp add_hash_id(nil) do
+    nil
+  end
   defp add_hash_id(user) do
     %{user | hash_id: encode_id(user.id)}
   end
+
 
   @doc """
   Deletes the signed token with the given context.

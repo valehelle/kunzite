@@ -6,6 +6,10 @@ defmodule KunziteWeb.UserSettingsControllerTest do
 
   setup :register_and_log_in_user
 
+  setup do
+    Application.put_env(:kunzite, Kunzite.Hashids, salt: "test hash")
+  end
+
   describe "GET /users/settings" do
     test "renders settings page", %{conn: conn} do
       conn = get(conn, Routes.user_settings_path(conn, :edit))

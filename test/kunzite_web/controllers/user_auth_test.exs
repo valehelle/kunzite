@@ -8,6 +8,7 @@ defmodule KunziteWeb.UserAuthTest do
   @remember_me_cookie "_kunzite_web_user_remember_me"
 
   setup %{conn: conn} do
+    Application.put_env(:kunzite, Kunzite.Hashids, salt: "test hash")
     conn =
       conn
       |> Map.replace!(:secret_key_base, KunziteWeb.Endpoint.config(:secret_key_base))
@@ -21,7 +22,7 @@ defmodule KunziteWeb.UserAuthTest do
       conn = UserAuth.log_in_user(conn, user)
       assert token = get_session(conn, :user_token)
       assert get_session(conn, :live_socket_id) == "users_sessions:#{Base.url_encode64(token)}"
-      assert redirected_to(conn) == "/post"
+      assert redirected_to(conn) == "/posts"
       assert Accounts.get_user_by_session_token(token)
     end
 
@@ -120,7 +121,7 @@ defmodule KunziteWeb.UserAuthTest do
     test "redirects if user is authenticated", %{conn: conn, user: user} do
       conn = conn |> assign(:current_user, user) |> UserAuth.redirect_if_user_is_authenticated([])
       assert conn.halted
-      assert redirected_to(conn) == "/post"
+      assert redirected_to(conn) == "/posts"
     end
 
     test "does not redirect if user is not authenticated", %{conn: conn} do
