@@ -4,7 +4,6 @@ defmodule KunziteWeb.UserSessionControllerTest do
   import Kunzite.AccountsFixtures
 
   setup do
-    Application.put_env(:kunzite, Kunzite.Hashids, salt: "test hash")
     %{user: user_fixture()}
   end
 

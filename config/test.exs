@@ -23,3 +23,8 @@ config :kunzite, KunziteWeb.Endpoint,
 
 # Print only warnings and errors during test
 config :logger, level: :warn
+
+
+# Configure hashids
+config :kunzite, Kunzite.Hashids,
+  salt: "this is a salt"

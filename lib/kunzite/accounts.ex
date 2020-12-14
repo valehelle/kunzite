@@ -9,6 +9,15 @@ defmodule Kunzite.Accounts do
 
 
 
+  def data() do
+    Dataloader.Ecto.new(Kunzite.Repo, query: &query/2)
+  end
+
+  def query(queryable, _params) do
+    queryable
+  end
+
+  
 
   ## Database getters
 
@@ -61,8 +70,7 @@ defmodule Kunzite.Accounts do
 
   """
   def get_user!(id) do
-
-    Repo.get!(User, id) |> Repo.preload([:post]) |> add_hash_id
+    Repo.get!(User, id) |> add_hash_id
   end
 
   def get_user_by_hashid(id) do

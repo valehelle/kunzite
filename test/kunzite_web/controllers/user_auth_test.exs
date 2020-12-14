@@ -8,7 +8,6 @@ defmodule KunziteWeb.UserAuthTest do
   @remember_me_cookie "_kunzite_web_user_remember_me"
 
   setup %{conn: conn} do
-    Application.put_env(:kunzite, Kunzite.Hashids, salt: "test hash")
     conn =
       conn
       |> Map.replace!(:secret_key_base, KunziteWeb.Endpoint.config(:secret_key_base))

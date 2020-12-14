@@ -9,6 +9,17 @@ defmodule Kunzite.Blogs do
   alias Kunzite.Blogs.Post
 
 
+  def data() do
+    Dataloader.Ecto.new(Kunzite.Repo, query: &query/2)
+  end
+
+  def query(queryable, _params) do
+    queryable
+  end
+
+  def list_post() do
+    Repo.all(Post)
+  end
 
   @doc """
   Gets a list of post by user.

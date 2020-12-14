@@ -53,7 +53,8 @@ defmodule Kunzite.MixProject do
       {:absinthe_plug, "~> 1.4"},
       {:poison, "~> 2.1.0"},
       {:slugify, "~> 1.3"},
-      {:hashids, "~> 2.0"}
+      {:hashids, "~> 2.0"},
+      {:dataloader, "~> 1.0.0"}
     ]
   end
 

@@ -3,9 +3,6 @@ defmodule KunziteWeb.UserRegistrationControllerTest do
 
   import Kunzite.AccountsFixtures
 
-  setup do
-    Application.put_env(:kunzite, Kunzite.Hashids, salt: "test hash")
-  end
   describe "GET /users/register" do
     test "renders registration page", %{conn: conn} do
       conn = get(conn, Routes.user_registration_path(conn, :new))

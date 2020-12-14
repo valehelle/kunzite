@@ -27,14 +27,18 @@ defmodule Kunzite.BlogsTest do
     end
 
     test "list_post/1 returns empty list with given id" do
-      {post, user}  = post_fixture()
       user = user_fixture()
       assert Blogs.list_post(user.id) == []
     end
 
     test "get_post!/1 returns the post with given id" do
-      {post, user}  = post_fixture()
+      {post, _user}  = post_fixture()
       assert Blogs.get_post!(post.id) == post
+    end
+
+    test "get_post_from_slug!/1 returns the post with given slug" do
+      {post, _user}  = post_fixture()
+      assert Blogs.get_post_from_slug(post.slug) == post
     end
 
     test "create_post/1 with valid data creates a post" do
@@ -63,20 +67,20 @@ defmodule Kunzite.BlogsTest do
     end
 
     test "update_post/2 with different author" do
-      {post, user}  = post_fixture()
+      {post, _user}  = post_fixture()
       different_user = user_fixture()
       assert {:error, %Ecto.Changeset{}} = Blogs.update_post(post, @update_attrs, different_user)
       assert post == Blogs.get_post!(post.id)
     end
 
     test "delete_post/1 deletes the post" do
-      {post, user}  = post_fixture()
+      {post, _user}  = post_fixture()
       assert {:ok, %Post{}} = Blogs.delete_post(post)
       assert_raise Ecto.NoResultsError, fn -> Blogs.get_post!(post.id) end
     end
 
     test "change_post/1 returns a post changeset" do
-      {post, user}  = post_fixture()
+      {post, _user}  = post_fixture()
       assert %Ecto.Changeset{} = Blogs.change_post(post)
     end
   end

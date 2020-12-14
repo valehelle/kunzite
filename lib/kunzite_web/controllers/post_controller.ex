@@ -17,7 +17,7 @@ defmodule KunziteWeb.PostController do
   def create(conn, %{"post" => post_params}) do
     current_user = conn.assigns.current_user
     case Blogs.create_post(post_params, current_user) do
-      {:ok, post} ->
+      {:ok, _post} ->
         redirect(conn, to: Routes.post_path(conn, :index))
       {:error, changeset} -> render(conn, "new.html", changeset: changeset)
     end
@@ -25,8 +25,7 @@ defmodule KunziteWeb.PostController do
 
 
   def show(conn, %{"slug" => slug}) do
-    current_user = conn.assigns.current_user
-    case Blogs.get_post_from_slug(slug, current_user.id) do
+    case Blogs.get_post_from_slug(slug) do
       nil -> 
        redirect(conn, to: Routes.post_path(conn, :index))
       post -> render(conn, "show.html", post: post)

@@ -1,10 +1,7 @@
 defmodule KunziteWeb.Context do
   @behaviour Plug
 
-  import Plug.Conn
-  import Ecto.Query, only: [where: 2]
 
-  alias Kunzite.{Repo, User}
 
   def init(opts), do: opts
 
