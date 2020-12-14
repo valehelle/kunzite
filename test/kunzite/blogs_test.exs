@@ -2,10 +2,10 @@ defmodule Kunzite.BlogsTest do
   use Kunzite.DataCase
 
   alias Kunzite.Blogs
-
+  alias Kunzite.Blogs.Post
+  import Kunzite.AccountsFixtures
   describe "posts" do
-    alias Kunzite.Blogs.Post
-    import Kunzite.AccountsFixtures
+
     
     @valid_attrs %{content: "some content", title: "some title"}
     @update_attrs %{content: "some updated content", title: "some updated title"}
