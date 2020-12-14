@@ -36,6 +36,8 @@ defmodule Kunzite.Blogs.Post do
   def update_changeset(post, attrs) do
     post
     |> cast(attrs, [:title, :content])
-    |> validate_required([:title, :content])
+    |> add_slug()
+    |> validate_required([:title, :content, :slug])
+
   end
 end

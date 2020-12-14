@@ -1,0 +1,15 @@
+Edit Post
+<%= form_for @changeset, Routes.post_path(@conn, :update, @post.id), fn f -> %>
+<div style="color:#606c76;">
+    <label>
+    Your title : <%= text_input f, :title, placeholder: "Title" %>
+    <%= error_tag f, :title %>
+  </label>
+   <label>
+    Your content : <%= text_input f, :content, placeholder: "content" %>
+    <%= error_tag f, :content %>
+  </label>
+</div>
+
+  <%= submit "Edit" %>
+<% end %>

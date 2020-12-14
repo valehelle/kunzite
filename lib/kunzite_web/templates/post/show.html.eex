@@ -1,2 +1,7 @@
 Post
 <%= @post.title %>
+</br>
+<%= @post.content %>
+</br>
+<%= @post.slug %>
+<%= link("Edit", to: Routes.post_path(@conn, :edit, @post.id)) %>

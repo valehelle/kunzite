@@ -84,7 +84,10 @@ defmodule KunziteWeb.Router do
     get "/posts", PostController, :index
     get "/posts/new", PostController, :new
     post "/posts/new", PostController, :create
-    get "/posts/:slug", PostController, :show
+    get "/posts/:post_id", PostController, :show
+    live "/posts/:post_id/edit", PostLive, :edit
+    get "/posts/:post_id/edit", PostController, :edit
+    put "/posts/:post_id/edit", PostController, :update
   end
 
   scope "/", KunziteWeb do
