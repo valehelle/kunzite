@@ -5,7 +5,7 @@ defmodule KunziteWeb.BlogsResolver do
     {:ok, Blogs.get_post_from_slug(slug)}
   end
 
-  def list_post(_root, _param, _info) do
-    {:ok, Blogs.list_post()}
+  def list_post(pagination_args, %{source: user}) do 
+      Blogs.list_post_with_pagination(user.id, pagination_args)
   end
 end

@@ -6,13 +6,13 @@ defmodule Kunzite.PostsFixtures do
   alias Kunzite.Blogs
 
   import Kunzite.AccountsFixtures
-  @valid_attrs %{content: "some content", title: "some title"}
+
 
     def post_fixture(attrs \\ %{}) do
       user = user_fixture()
       {:ok, post} =
         attrs
-        |> Enum.into(@valid_attrs)
+        |> Enum.into(attrs)
         |> Blogs.create_post(user)
 
       {post, user}

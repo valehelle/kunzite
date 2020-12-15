@@ -7,6 +7,7 @@ defmodule Kunzite.Blogs do
   alias Kunzite.Repo
 
   alias Kunzite.Blogs.Post
+  alias Absinthe.Relay
 
 
   def data() do
@@ -19,6 +20,12 @@ defmodule Kunzite.Blogs do
 
   def list_post() do
     Repo.all(Post)
+  end
+
+  def list_post_with_pagination(id, pagination_args) do
+      Post
+      |> where(author_id: ^id)
+      |> Relay.Connection.from_query(&Repo.all/1, pagination_args)
   end
 
   @doc """

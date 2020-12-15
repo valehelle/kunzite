@@ -1,19 +1,20 @@
 defmodule KunziteWeb.PostLiveTest do
   use KunziteWeb.ConnCase
-  alias KunziteWeb.UserAuth
+  alias Kunzite.Accounts
   import Phoenix.LiveViewTest
   import Kunzite.PostsFixtures
 
+
+    @valid_attrs %{content: "some content", title: "some title"}
+    @update_attrs %{content: "some updated content", title: "some updated title"}
+
+
   setup %{conn: conn} do
-    conn =
-      conn
-      |> Map.replace!(:secret_key_base, KunziteWeb.Endpoint.config(:secret_key_base))
-      |> init_test_session(%{})
-    {post, user} = post_fixture()
-    conn = conn |> put_session(:user_return_to, "/posts/#{post.id}/edit") |> UserAuth.log_in_user(user)
-    
-    token =  get_session(conn, :user_token)
-    conn = recycle(conn)
+
+    {post, user} = post_fixture(@valid_attrs)
+
+    token = Accounts.generate_user_session_token(user)
+
     conn =
       conn
       |> Map.replace!(:secret_key_base, KunziteWeb.Endpoint.config(:secret_key_base))
@@ -33,9 +34,7 @@ defmodule KunziteWeb.PostLiveTest do
     assert render(post_live) =~ "Post"
   end
   test "save title", %{conn: conn, post: post, user: user} do
-
-    
     {:ok, post_live, disconnected_html} = live(conn, "/posts/#{post.id}/edit")
-    assert render_change(post_live, :save, %{post: %{content: "some updated content", title: "some updated title"}}) =~ "some updated content"
+    assert render_change(post_live, :save, %{post:  @update_attrs}) =~  @update_attrs.title
   end
 end

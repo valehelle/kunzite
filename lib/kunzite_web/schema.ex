@@ -1,14 +1,23 @@
 defmodule KunziteWeb.Schema do
   use Absinthe.Schema
+  use Absinthe.Relay.Schema, :modern
+
   alias KunziteWeb.AccountsResolver
   alias KunziteWeb.BlogsResolver
   alias Kunzite.Accounts
   alias Kunzite.Blogs
+
   import Absinthe.Resolution.Helpers, only: [dataloader: 1]
+
+  
+
+  connection node_type: :post
 
   object :user do
     field :email, non_null(:string)
-    field :post, list_of(:post), resolve: dataloader(Blogs)
+    connection field :posts, node_type: :post do
+      resolve &BlogsResolver.list_post/2
+    end
   end
 
   object :post do
@@ -20,19 +29,6 @@ defmodule KunziteWeb.Schema do
   end
 
   query do
-    @desc "Get post"
-    field :post, non_null(:post) do
-     arg :slug, non_null(:string)
-     resolve(&BlogsResolver.get_post/3)
-    end
-
-    @desc "List post"
-    field :list_post, list_of(:post) do
-     resolve(&BlogsResolver.list_post/3)
-    end
-
-
-
     @desc "Get a user of the blog"
     field :user, :user do
       arg :id, non_null(:string)
@@ -44,7 +40,7 @@ def context(ctx) do
   loader =
     Dataloader.new
     |> Dataloader.add_source(Accounts, Accounts.data())
-    |> Dataloader.add_source(Blogs, Blogs.data())
+
 
   Map.put(ctx, :loader, loader)
 end
