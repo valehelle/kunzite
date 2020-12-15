@@ -8,4 +8,8 @@ defmodule KunziteWeb.BlogsResolver do
   def list_post(pagination_args, %{source: user}) do 
       Blogs.list_post_with_pagination(user.id, pagination_args)
   end
+
+  def get_count(user, _, _) do 
+      {:ok, Blogs.get_count(user.id)}
+  end
 end

@@ -15,6 +15,10 @@ defmodule KunziteWeb.Schema do
 
   object :user do
     field :email, non_null(:string)
+    field :count, :integer do
+      resolve &BlogsResolver.get_count/3
+    end
+
     connection field :posts, node_type: :post do
       resolve &BlogsResolver.list_post/2
     end
@@ -40,8 +44,6 @@ def context(ctx) do
   loader =
     Dataloader.new
     |> Dataloader.add_source(Accounts, Accounts.data())
-
-
   Map.put(ctx, :loader, loader)
 end
 
