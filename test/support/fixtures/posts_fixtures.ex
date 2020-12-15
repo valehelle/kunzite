@@ -8,8 +8,7 @@ defmodule Kunzite.PostsFixtures do
   import Kunzite.AccountsFixtures
 
 
-    def post_fixture(attrs \\ %{}) do
-      user = user_fixture()
+    def post_fixture(attrs \\ %{}, user \\ user_fixture()) do
       {:ok, post} =
         attrs
         |> Enum.into(attrs)

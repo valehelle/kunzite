@@ -15,6 +15,7 @@ defmodule Kunzite.BlogsTest do
     @invalid_attrs %{content: nil, title: nil}
 
 
+    
     test "list_post/1 returns list of post with given id" do
       {post, user}  = post_fixture(@valid_attrs)
       assert Blogs.list_post(user.id) == [post]
@@ -77,5 +78,26 @@ defmodule Kunzite.BlogsTest do
       {post, _user}  = post_fixture(@valid_attrs )
       assert %Ecto.Changeset{} = Blogs.change_post(post)
     end
+
+    test "get_count/1 returns a number of post belong to user" do
+      {post, user}  = post_fixture(%{content: "some content", title: "some title 1"})
+      {post, user}  = post_fixture(%{content: "some content", title: "some title 2"}, user)
+      {post, user}  = post_fixture(%{content: "some content", title: "some title 3"}, user)
+      assert 3 = Blogs.get_count(user.id)
+    end
+
+    test "list_post_with_pagination/2 returns a list of latest 3 post with pagination" do
+      {_post, user}  = post_fixture(%{content: "some content", title: "some title 1"})
+      {_post, user}  = post_fixture(%{content: "some content", title: "some title 2"}, user)
+      {%{id: post_3_id}, user}  = post_fixture(%{content: "some content", title: "some title 3"}, user)
+      {%{id: post_4_id}, user}  = post_fixture(%{content: "some content", title: "some title 4"}, user)
+      {%{id: post_5_id}, user}  = post_fixture(%{content: "some content", title: "some title 5"}, user)
+      {:ok, %{edges: [%{node: node_post_5},%{node: node_post_4},%{node: node_post_3}]}} = Blogs.list_post_with_pagination(user.id, %{first: 3})
+      assert post_5_id == node_post_5.id
+      assert post_4_id == node_post_4.id
+      assert post_3_id == node_post_3.id
+
+    end
+
   end
 end
