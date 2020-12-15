@@ -5,7 +5,6 @@ defmodule KunziteWeb.Schema do
   alias KunziteWeb.AccountsResolver
   alias KunziteWeb.BlogsResolver
   alias Kunzite.Accounts
-  alias Kunzite.Blogs
 
   import Absinthe.Resolution.Helpers, only: [dataloader: 1]
 

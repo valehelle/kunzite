@@ -3,6 +3,7 @@ defmodule KunziteWeb.PostLive do
   alias Kunzite.Blogs
   alias Kunzite.Blogs.Post
   alias Kunzite.Accounts
+  
   @impl true
   def mount(%{"post_id" => post_id}, %{"user_token" => user_token}, socket) do
     user = Accounts.get_user_by_session_token(user_token)
@@ -11,6 +12,7 @@ defmodule KunziteWeb.PostLive do
     {:ok, assign(socket, changeset: changeset, post: post, current_user: user)}
   end
 
+  @impl true
   def handle_event("save", %{"post" => post_params}, socket) do
     current_user = socket.assigns.current_user
     post = socket.assigns.post

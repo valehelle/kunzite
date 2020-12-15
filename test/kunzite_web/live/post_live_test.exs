@@ -26,15 +26,14 @@ defmodule KunziteWeb.PostLiveTest do
     %{conn: conn, post: post, user: user}
   end
 
-  test "disconnected and connected render", %{conn: conn, post: post, user: user} do
-
-    
+  test "disconnected and connected render", %{conn: conn, post: post} do
     {:ok, post_live, disconnected_html} = live(conn, "/posts/#{post.id}/edit")
     assert disconnected_html =~ "Post"
     assert render(post_live) =~ "Post"
   end
-  test "save title", %{conn: conn, post: post, user: user} do
-    {:ok, post_live, disconnected_html} = live(conn, "/posts/#{post.id}/edit")
+
+  test "save title", %{conn: conn, post: post} do
+    {:ok, post_live, _disconnected_html} = live(conn, "/posts/#{post.id}/edit")
     assert render_change(post_live, :save, %{post:  @update_attrs}) =~  @update_attrs.title
   end
 end
