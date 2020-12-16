@@ -96,7 +96,6 @@ defmodule Kunzite.BlogsTest do
       assert post_5_id == node_post_5.id
       assert post_4_id == node_post_4.id
       assert post_3_id == node_post_3.id
-
     end
 
   end

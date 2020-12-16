@@ -37,6 +37,14 @@ defmodule KunziteWeb.Schema do
       arg :id, non_null(:string)
       resolve &AccountsResolver.find_user/3
     end
+
+    @desc "Get a post from the sluf"
+    field :get_post, :post do
+      arg :slug, non_null(:string)
+      resolve &BlogsResolver.get_post/3
+    end
+
+
   end
 
 def context(ctx) do
