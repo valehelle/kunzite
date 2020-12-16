@@ -1,5 +1,5 @@
 Edit Post
-<%= f = form_for @changeset, "#", [phx_change: :save, phx_submit: :save] %>
+<%= f = form_for @changeset, "#", [phx_change: :change, phx_submit: :save] %>
 <div style="color:#606c76;">
     <label>
     Your title : <%= text_input f, :title, placeholder: "Title", phx_debounce: "2000" %>
@@ -13,3 +13,11 @@ Edit Post
 
   <%= submit "Edit" %>
 </form>
+
+<button style="margin-left: 10px; margin-bottom: 0;" phx-click="publish">
+  Publish
+</button>
+<button style="margin-left: 10px; margin-bottom: 0;" phx-click="unpublish">
+  Unpublish
+</button>
+

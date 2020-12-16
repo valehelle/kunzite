@@ -19,12 +19,56 @@ defmodule KunziteWeb.PostLive do
     case Blogs.update_post(post, post_params, current_user) do
       {:ok, post } -> 
         changeset = Post.update_changeset(post, %{})
-        {:noreply, assign(socket, changeset: changeset)}
+        {:noreply, assign(socket, changeset: changeset, post: post)}
       {:error, changeset} -> 
         {:noreply, assign(socket, changeset: changeset)}
     end
 
-end
+  end
+
+  @impl true
+  def handle_event("publish", _param, socket) do
+    current_user = socket.assigns.current_user
+    post = socket.assigns.post
+    IO.inspect post
+    case Blogs.publish_post(post, %{is_published: true}, current_user) do
+      {:ok, post } -> 
+        changeset = Post.update_changeset(post, %{})
+        {:noreply, assign(socket, changeset: changeset, post: post)}
+      {:error, changeset} -> 
+        {:noreply, assign(socket, changeset: changeset)}
+    end
+  end
+
+  @impl true
+  def handle_event("unpublish", _param, socket) do
+    current_user = socket.assigns.current_user
+    post = socket.assigns.post
+    IO.inspect post
+    case Blogs.publish_post(post, %{is_published: false}, current_user) do
+      {:ok, post } -> 
+        changeset = Post.update_changeset(post, %{})
+        {:noreply, assign(socket, changeset: changeset, post: post)}
+      {:error, changeset} -> 
+        {:noreply, assign(socket, changeset: changeset)}
+    end
+  end
+
+
+
+  @impl true
+  def handle_event("change", %{"post" => post_params}, socket) do
+    current_user = socket.assigns.current_user
+    post = socket.assigns.post
+    case Blogs.update_post(post, post_params, current_user) do
+      {:ok, post } -> 
+        changeset = Post.update_changeset(post, %{})
+        {:noreply, assign(socket, changeset: changeset, post: post)}
+      {:error, changeset} -> 
+        {:noreply, assign(socket, changeset: changeset)}
+    end
+
+  end
 
 
 end

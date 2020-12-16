@@ -41,4 +41,12 @@ defmodule Kunzite.Blogs.Post do
     |> validate_required([:title, :content, :slug])
 
   end
+
+  def publish_changeset(post, attrs) do
+    post
+    |> cast(attrs, [:is_published])
+    |> validate_required([:is_published])
+
+  end
+
 end

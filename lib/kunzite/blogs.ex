@@ -136,6 +136,32 @@ defmodule Kunzite.Blogs do
        {:error, changeset}
     end
   end
+
+  @doc """
+  Publish a post.
+
+  ## Examples
+
+      iex> publish_post(post, %{field: new_value})
+      {:ok, %Post{}}
+
+      iex> publish_post(post, %{field: bad_value}, user)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def publish_post(%Post{} = post, attrs, user) do
+    changeset = Post.publish_changeset(post, attrs)
+    case is_author(post, user) do
+     true ->
+       Repo.update(changeset)
+     false ->
+       changeset = Ecto.Changeset.add_error(changeset, :author, "Invalid")
+       {:error, changeset}
+    end
+  end
+
+
+  
   @doc """
   Deletes a post.
 
