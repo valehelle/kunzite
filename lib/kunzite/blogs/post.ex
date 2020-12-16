@@ -8,6 +8,7 @@ defmodule Kunzite.Blogs.Post do
     field :content, :string
     field :title, :string
     field :slug, :string
+    field :is_published, :boolean, default: false
     belongs_to :author, User
     
     timestamps()

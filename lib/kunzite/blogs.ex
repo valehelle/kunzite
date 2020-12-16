@@ -24,7 +24,8 @@ defmodule Kunzite.Blogs do
 
   def list_post_with_pagination(id, pagination_args) do
     query = from p in Post,
-            where: p.author_id == ^id
+            where: p.author_id == ^id,
+            where: p.is_published == true
     Relay.Connection.from_query(query, &Repo.all/1, pagination_args)
   end
 
@@ -90,7 +91,8 @@ defmodule Kunzite.Blogs do
 
   def get_post_from_slug(slug) do 
     query = from p in Post,
-            where: p.slug == ^slug
+            where: p.slug == ^slug,
+            where: p.is_published == true
     Repo.one(query) |> Repo.preload([:author])
   end
 
