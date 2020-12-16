@@ -35,7 +35,7 @@ defmodule KunziteWeb.Router do
 
     forward "/graphiql", Absinthe.Plug.GraphiQL,
       schema: KunziteWeb.Schema,
-      interface: :advanced,
+      interface: :simple,
       context: %{pubsub: KunziteWeb.Endpoint}
   end
 
